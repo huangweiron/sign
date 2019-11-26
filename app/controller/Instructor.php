@@ -4,6 +4,7 @@ namespace app\controller;
 use app\BaseController;
 use think\View;
 use think\facade\Db;
+use app\model\Sktime;
 class Instructor extends BaseController
 {
     public function index(View $view)
@@ -17,8 +18,11 @@ class Instructor extends BaseController
         $view->assign('ban',$res);
         return $view->fetch();
     }
-    public function banday()
+    public function banday(View $view,Sktime $sktime)
     {
-        $res=$student->nowtime();
+        $classId=$_GET['classId'];
+        $res=$sktime->distinct(true)->field(['zhouzi','week'])->where('classId',$classId)->select();
+        $view->assign('time',$res);
+        return $view->fetch();
     }
 }

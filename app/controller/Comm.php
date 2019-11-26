@@ -83,6 +83,8 @@ class Comm extends BaseController
             }
             $now=['week'=>'第'.$zhou.'周','zhou'=>$weeknum];
             return $now;
+        }else{
+            echo '<script>alert("还未开学，别着急")</script>';
         }
     }
 }
