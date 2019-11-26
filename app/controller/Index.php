@@ -9,10 +9,12 @@ class Index extends BaseController
 {
     public function index(View $view)
     {
+        //登录界面
         return $view->fetch();
     }
     public function login()
     {
+        //登录功能
         if(isset($_POST['submit']))
         {
             $username=$_POST['username'];

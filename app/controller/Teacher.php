@@ -7,6 +7,7 @@ use app\model\Sktime;
 use think\facade\Db;
 use app\model\Kaoqin;
 use app\controller\Student;
+use app\controller\Comm;
 class Teacher extends BaseController
 {
     public function index(View $view)
@@ -15,6 +16,7 @@ class Teacher extends BaseController
     }
     public function sker(View $view)
     {
+        //上课课程
         $kc=Db::query("select *,sktime.Id as Id from sktime,curriculumplan,curriculum,class where sktime.curriculumplanId=curriculumplan.Id and curriculumplan.curriculumId=curriculum.Id and sktime.classId=class.Id");
         // dump($kc);
         $view->assign('kc',$kc);
@@ -22,6 +24,7 @@ class Teacher extends BaseController
     }
     public function state(View $view)
     {
+        //考勤
         $sktimeId=$_GET['sktimeId'];
         $jk=Db::query("select * from kaoqin,student where kaoqin.studentId=student.Id and kaoqin.sktimeId=$sktimeId");
         // dump($jk);
@@ -30,6 +33,7 @@ class Teacher extends BaseController
     }
     public function statemove(Kaoqin $kaoqin)
     {
+        //修改学生考勤
         $sktimeId=$_POST['sktimeId'];
         $studentId=$_POST['studentId'];
         $state=$_POST['state'];
@@ -39,10 +43,10 @@ class Teacher extends BaseController
         $stud->save();
         echo '<script>alert("修改成功");history.go(-1);</script>';
     }
-    public function live(View $view,Student $student)
+    public function live(View $view,Comm $comm)
     {
-        $res=$student->nowtime();
-        dump($res);
+        //判断有无上课
+        $res=$comm->nowtime();
         $zhouzi=$res['week'];
         $week=$res['zhou'];
         $time=$res['time'];//现在的时间
@@ -66,14 +70,21 @@ class Teacher extends BaseController
                 $num=$sk[$i]['num'];
             }
         }
-        if($num==0)
+        $res='';
+        if($num!='0')
         {
-            echo 'xiang';
-        }else{
             $res=Db::query("select * from sktime,kaoqin,student where kaoqin.sktimeId=sktime.Id and kaoqin.studentId=student.Id and sktime.zhouzi=$zhouzi and sktime.week='$week' and sktime.jieci=$num");
-            dump($res);
+        }else{
+            echo '<script>alert("当前时间没课!");history.go(-1);</script>';
         }
-        $view->assign('dq',$res);
-        return $view->fetch();
+        if(count($res)==0)
+        {
+            echo '<script>alert("当前时间没课!");history.go(-1);</script>';
+        }else{
+            dump($res);
+            $view->assign('dq',$res);
+            return $view->fetch();
+        }
+        
     }
 }
