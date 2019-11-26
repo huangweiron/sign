@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>编号</th>
+            <th>班级</th>
+            <th>课程</th>
+            <th>周次</th>
+            <th>星期</th>
+            <th>节次</th>
+            <th>操作</th>
+        </tr>
+        {volist name='$kc' id='vo'}
+        <tr>
+            <td>{$key+1}</td>
+            <td>{$vo.class}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.zhouzi}</td>
+            <td>{$vo.week}</td>
+            <td>{$vo.jieci}</td>
+            <td><a href="state?sktimeId={$vo.Id}">查看</a></td>
+        </tr>
+        {/volist}
+    </table>
+</body>
+
+</html>

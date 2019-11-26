@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="statemove" method="post">
+        <table>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>签到情况</th>
+                <th>修改</th>
+            </tr>
+            {volist name='$jk' id='vo'}
+
+            <tr>
+                <td>{$vo.username}</td>
+                <td>{$vo.name}</td>
+                <td><input type="text" value='{$vo.studentId}' name="studentId" style="display:none">
+                    <input type="text" value='{$vo.sktimeId}' name="sktimeId" style="display:none">
+                    <input type="text" value='{$vo.state}' name='state'></td>
+                <td><input type="submit" value="确定"></td>
+            </tr>
+            {/volist}
+
+        </table>
+    </form>
+</body>
+
+</html>

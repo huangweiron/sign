@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="{:url('index/login')}" method="POST">
+        <div>
+            <p>
+                <label for="">账号</label>
+                <input type="text" name="username" id="username">
+            </p>
+            <p>
+                <label for="">密码</label>
+                <input type="password" name="password" id="password">
+            </p>
+            <p>
+                <input type="radio" name="radio" value="student" id="student" checked>
+                <label for="student">学生</label>
+                <input type="radio" name="radio" value="teacher" id="teacher">
+                <label for="teacher">教师</label>
+                <input type="radio" name="radio" value="instructor" id="instructor">
+                <label for="instructor">辅导员</label>
+            </p>
+            <p>
+                <input type="submit" name="submit" value="登录">
+            </p>
+        </div>
+    </form>
+</body>
+
+</html>
