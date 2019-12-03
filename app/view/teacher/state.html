@@ -28,7 +28,12 @@
                 <td><input type="submit" value="确定"></td>
             </tr>
             {/volist}
-
+            <tr>
+                <td colspan="4">
+                    <a href="state?page={$page}&&ye=-&&n={$n}&&sktimeId={$sktimeId}">上一页</a>
+                    <a href="state?page={$page}&&ye=+&&n={$n}&&sktimeId={$sktimeId}">下一页</a>
+                </td>
+            </tr>
         </table>
     </form>
 </body>

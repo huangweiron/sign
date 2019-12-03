@@ -17,18 +17,73 @@ class Teacher extends BaseController
     public function sker(View $view)
     {
         //上课课程
-        $kc=Db::query("select *,sktime.Id as Id from sktime,curriculumplan,curriculum,class where sktime.curriculumplanId=curriculumplan.Id and curriculumplan.curriculumId=curriculum.Id and sktime.classId=class.Id");
+        if(isset($_GET['ye']))
+        {
+            $ye=$_GET['ye'];
+            $page=$_GET['page'];
+            if($ye=='-')
+            {
+                if($page==0)
+                {
+                    $page=0;
+                }else{
+                    $page--;
+                }    
+            }else{
+                
+                if($_GET['n']>10)
+                {
+                    $page++;
+                }
+                $page=$page;
+                
+            }
+        }else{
+            $page=0;
+        }
+        $kc=Db::query("select *,sktime.Id as Id from sktime,curriculumplan,curriculum,class where sktime.curriculumplanId=curriculumplan.Id and curriculumplan.curriculumId=curriculum.Id and sktime.classId=class.Id  limit $page,10");
         // dump($kc);
+        $n=count($kc);
         $view->assign('kc',$kc);
+        $view->assign('page',$page);
+        $view->assign('n',$n);
         return $view->fetch();
     }
     public function state(View $view)
     {
         //考勤
         $sktimeId=$_GET['sktimeId'];
-        $jk=Db::query("select * from kaoqin,student where kaoqin.studentId=student.Id and kaoqin.sktimeId=$sktimeId");
+        if(isset($_GET['ye']))
+        {
+            $ye=$_GET['ye'];
+            $page=$_GET['page'];
+            if($ye=='-')
+            {
+                if($page==0)
+                {
+                    $page=0;
+                }else{
+                    $page--;
+                }    
+            }else{
+                
+                if($_GET['n']>10)
+                {
+                    $page++;
+                }
+                $page=$page;
+                
+            }
+        }else{
+            $page=0;
+        }
+        $jk=Db::query("select * from kaoqin,student where kaoqin.studentId=student.Id and kaoqin.sktimeId=$sktimeId limit $page,10");
         // dump($jk);
+        $view->assign('sktimeId',$sktimeId);
         $view->assign('jk',$jk);
+        $n=count($jk);
+        $view->assign('page',$page);
+        $view->assign('n',$n);
         return $view->fetch();
     }
     public function statemove(Kaoqin $kaoqin)
